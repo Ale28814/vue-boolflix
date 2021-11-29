@@ -1,8 +1,8 @@
 <template>
 <div class="app">
-<Header/>
+<Header @searchClick='choos'/>
 
-    <Mainer/>
+<Mainer :film="foundFilm"/>
 
 </div>
     
@@ -18,25 +18,33 @@ export default {
   components: {
     Header,
     Mainer,
-    
+  },
+  data() {
+    return {
+      foundFilm: null,
+      selection: '',
+    }
   },
   methods: {
     getFilms() {
-      axios.get('https://api.themoviedb.org/3/movie/550?api_key=faf06f90f56fcb8302b8f361cdab33bb').then(result => {
-        return result.data.rersponse
+      axios.get('https://api.themoviedb.org/3/search/movie', {
+        params: {
+          api_key: 'ea406b3b6df3538757d7eb19761ffa58',
+          query: this.selection,
+          language: 'it-IT',
+        }
       })
+      .then(result => {
+        this.foundFilm = result.data.results;
+      })
+    },
+    choos(text) {
+      this.selection=text;
+      this.getFilms()
     }
   }
 }
 </script>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style scoped lang="scss">
 </style>
