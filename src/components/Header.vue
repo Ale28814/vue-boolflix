@@ -1,6 +1,6 @@
 <template>
   <div class="bgc p-2">
-      <input type="text" placeholder="Inizia ricerca" v-model="BarText" @keyup.enter="$emit('searchClick', BarText)">
+      <input type="text" placeholder="Inizia ricerca" v-model.trim="BarText" @keyup.enter="$emit('searchClick', BarText)">
       <button @click="$emit('searchClick', BarText)">Cerca</button>
   </div>
 </template>
